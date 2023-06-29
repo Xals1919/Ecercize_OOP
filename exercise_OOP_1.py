@@ -38,6 +38,7 @@ class Student:
             return
         return self._average() < other._average()
 
+
 class Mentor:
     def __init__(self, name, surname):
         self.name = name
@@ -89,49 +90,89 @@ class Reviewer(Mentor):
 
 
 # Студенты
-some_student_1 = Student('Roy', 'Eman', 'your_gender')
-some_student_1.courses_in_progress += ['Python', 'Git']
-some_student_1.finished_courses += ['Введение в программирование']
-some_student_2 = Student('Arnold', 'Ewans', 'your_gender')
-some_student_2.courses_in_progress += ['Python', 'Git']
-some_student_2.finished_courses += ['Введение в программирование']
+student_1 = Student('Roy', 'Eman', 'your_gender')
+student_1.courses_in_progress += ['Python', 'Git']
+student_1.finished_courses += ['Введение в программирование']
+
+student_2 = Student('Arnold', 'Ewan', 'your_gender')
+student_2.courses_in_progress += ['Python', 'Git']
+student_2.finished_courses += ['Введение в программирование']
 
 # Менторы
-cool_mentor = Mentor('Irina', 'Masker')
-cool_mentor.courses_attached += ['Python']
+mentor_1 = Mentor('Irina', 'Masker')
+mentor_1.courses_attached += ['Python', 'Git']
+mentor_2 = Mentor('German', 'Poker')
+mentor_2.courses_attached += ['Введение в программирование']
 
 # Лекторы
-some_lecturer_1 = Lecturer('Brain', 'Diz')
-some_lecturer_1.courses_attached += ['Python']
-some_lecturer_2 = Lecturer('Rou', 'Vinz')
-some_lecturer_2.courses_attached += ['Python']
+lecturer_1 = Lecturer('Brain', 'Diz')
+lecturer_1.courses_attached += ['Python', 'Git']
+lecturer_2 = Lecturer('Rou', 'Vinz')
+lecturer_2.courses_attached += ['Python', 'Введение в программирование', 'Git']
 
 # Эксперты
-some_reviewer = Reviewer('Jon', 'Yoke')
-some_reviewer.courses_attached += ['Python', 'Git']
+reviewer_1 = Reviewer('Jon', 'Yoke')
+reviewer_1.courses_attached += ['Python', 'Git']
+reviewer_2 = Reviewer('Vanesa', 'Karlo')
+reviewer_2.courses_attached += ['Python', 'Введение в программирование', 'Git']
 
+# Методы
 # Оценки студентов
-some_reviewer.rate_hw(some_student_1, 'Python', 10)
-some_reviewer.rate_hw(some_student_1, 'Git', 7)
-some_reviewer.rate_hw(some_student_1, 'Python', 6)
-some_reviewer.rate_hw(some_student_2, 'Git', 5)
-some_reviewer.rate_hw(some_student_2, 'Python', 9)
-some_reviewer.rate_hw(some_student_2, 'Python', 6)
+reviewer_1.rate_hw(student_1, 'Python', 10)
+reviewer_1.rate_hw(student_1, 'Git', 7)
+reviewer_1.rate_hw(student_1, 'Python', 6)
+reviewer_2.rate_hw(student_2, 'Git', 5)
+reviewer_2.rate_hw(student_2, 'Python', 9)
+reviewer_2.rate_hw(student_2, 'Python', 6)
 
 # Оценки лекторов
-some_student_1.rate_hw(some_lecturer_1, 'Python', 9)
-some_student_1.rate_hw(some_lecturer_1, 'Python', 6)
-some_student_1.rate_hw(some_lecturer_1, 'Git', 4)
-some_student_2.rate_hw(some_lecturer_2, 'Python', 10)
-some_student_2.rate_hw(some_lecturer_2, 'Python', 7)
-some_student_2.rate_hw(some_lecturer_2, 'Git', 4)
+student_1.rate_hw(lecturer_1, 'Python', 9)
+student_1.rate_hw(lecturer_1, 'Python', 6)
+student_1.rate_hw(lecturer_1, 'Git', 4)
+student_2.rate_hw(lecturer_2, 'Python', 10)
+student_2.rate_hw(lecturer_2, 'Python', 7)
+student_2.rate_hw(lecturer_2, 'Git', 4)
 
-# print(some_student_1.grades)
-# print(some_student_2.grades)
-# print(some_reviewer)
-# print(some_student_1)
-# print(some_student_2)
-# print(some_student_1 > some_student_2)
-# print(some_lecturer_1)
-# print(some_lecturer_2)
-# print(some_lecturer_1 < some_lecturer_2)
+print(reviewer_1)
+print(reviewer_2)
+
+print(student_1)
+print(student_2)
+print(student_1 > student_2)
+
+print(lecturer_1)
+print(lecturer_2)
+print(lecturer_1 > lecturer_2)
+
+students = [student_1, student_2]
+lecturers = [lecturer_1, lecturer_2]
+course = 'Python'
+
+
+def average_rating_student(student, courses):
+    for person in student:
+        if courses in person.courses_in_progress:
+            count = 0
+            quantity = 0
+            for rating in person.grades.values():
+                for rating_1 in rating:
+                    count += rating_1
+                    quantity += 1
+            print(f'Студент {person.name} на курсе {courses} имеет средний бал {round((count / quantity), 1)}')
+
+
+def average_rating_lecturers(lecturer, courses):
+    for person in lecturer:
+        if courses in person.courses_attached:
+            count = 0
+            quantity = 0
+            for rating in person.grades.values():
+                for rating_1 in rating:
+                    count += rating_1
+                    quantity += 1
+            print(f'Лектор {person.name} на курсе {courses} имеет средний бал {round((count / quantity), 1)}')
+
+
+average_rating_student(students, course)
+average_rating_lecturers(lecturers, course)
+
